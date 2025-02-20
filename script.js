@@ -1,5 +1,4 @@
-// Adhan sound
-const adhanSound = new Audio('adhan.mp3');  // Path to your Adhan mp3 file
+const adhanSound = new Audio('adhan.mp3');
 
 document.getElementById('locationForm').addEventListener('submit', async function (event) {
     event.preventDefault();
@@ -8,16 +7,12 @@ document.getElementById('locationForm').addEventListener('submit', async functio
     const country = document.getElementById('country').value;
     const state = document.getElementById('state').value;
 
-    // Fetch prayer times from the Aladhan API
     const prayerTimes = await getPrayerTimes(location, country, state);
 
     if (prayerTimes) {
-        // Display prayer times if successfully fetched
         displayPrayerTimes(prayerTimes);
-        // Set alarms for each prayer time
         setPrayerAlarms(prayerTimes);
     } else {
-        // Handle failure (show error message)
         alert('No internet connection. Please check your connection and try again.');
     }
 });
@@ -43,7 +38,6 @@ async function getPrayerTimes(location, country, state) {
     }
 }
 
-// Display prayer times on the page
 function displayPrayerTimes(times) {
     const prayerTimesDiv = document.getElementById('prayerTimes');
     prayerTimesDiv.innerHTML = `<h2>Prayer Times</h2><ul>
@@ -55,7 +49,6 @@ function displayPrayerTimes(times) {
     </ul>`;
 }
 
-// Set alarms for each prayer time
 function setPrayerAlarms(times) {
     Object.keys(times).forEach(prayer => {
         const prayerTime = times[prayer];
@@ -70,13 +63,12 @@ function setPrayerAlarms(times) {
         
         if (delay > 0) {
             setTimeout(() => {
-                playAdhan(); // Play the Adhan sound when it's time for the prayer
+                playAdhan();
             }, delay);
         }
     });
 }
 
-// Function to play the Adhan
 function playAdhan() {
     adhanSound.play();
 }
